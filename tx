@@ -10,8 +10,6 @@ from txclib import utils
 from txclib import get_version
 from txclib.log import set_log_level, logger
 
-reload(sys) # WTF? Otherwise setdefaultencoding doesn't work
-
 # This block ensures that ^C interrupts are handled quietly.
 try:
     import signal
@@ -28,10 +26,6 @@ try:
 
 except KeyboardInterrupt:
     sys.exit(1)
-
-# When we open file with f = codecs.open we specifi FROM what encoding to read
-# This sets the encoding for the strings which are created with f.read()
-sys.setdefaultencoding('utf-8')
 
 
 def main(argv):
