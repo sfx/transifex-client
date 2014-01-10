@@ -14,14 +14,14 @@ try: # Python 3
     from http.client import HTTPConnection, HTTPException
     from http.client import HTTP_PORT, HTTPS_PORT
 except ImportError:
-    from httplib import HTTPConnection, HTTPException
-    from httplib import HTTP_PORT, HTTPS_PORT
+    from http.client import HTTPConnection, HTTPException
+    from http.client import HTTP_PORT, HTTPS_PORT
 
 try: # Python 3
     from queue import LifoQueue, Empty, Full
 except ImportError:
-    from Queue import LifoQueue, Empty, Full
-    import Queue as _  # Platform-specific: Windows
+    from queue import LifoQueue, Empty, Full
+    import queue as _  # Platform-specific: Windows
 
 
 try: # Compiled with SSL?
@@ -35,7 +35,7 @@ try: # Compiled with SSL?
     try: # Python 3
         from http.client import HTTPSConnection
     except ImportError:
-        from httplib import HTTPSConnection
+        from http.client import HTTPSConnection
 
     import ssl
     BaseSSLError = ssl.SSLError
@@ -241,7 +241,7 @@ class HTTPConnectionPool(ConnectionPool, RequestMethods):
         self.proxy_headers = _proxy_headers or {}
 
         # Fill the queue up so that doing get() on it will block properly
-        for _ in xrange(maxsize):
+        for _ in range(maxsize):
             self.pool.put(None)
 
         # These are mostly for testing and debugging purposes.

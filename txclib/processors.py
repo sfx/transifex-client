@@ -7,7 +7,7 @@ Module for API-related calls.
 try:
     from urllib import parse as urlparse
 except ImportError:
-    import urlparse
+    import urllib.parse
 
 
 def hostname_tld_migration(hostname):
@@ -17,7 +17,7 @@ def hostname_tld_migration(hostname):
     :param hostname: The hostname to migrate (if needed).
     :returns: A hostname with the transifex.com domain (if needed).
     """
-    parts = urlparse.urlparse(hostname)
+    parts = urllib.parse.urlparse(hostname)
     if parts.hostname.endswith('transifex.net'):
         hostname = hostname.replace('transifex.net', 'transifex.com', 1)
     return hostname
@@ -30,7 +30,7 @@ def hostname_ssl_migration(hostname):
     :param hostname: The hostname to migrate (if needed).
     :returns: A https hostname (if needed).
     """
-    parts = urlparse.urlparse(hostname)
+    parts = urllib.parse.urlparse(hostname)
     is_transifex = (
         parts.hostname[-14:-3] == '.transifex.' or
         parts.hostname == 'transifex.net' or

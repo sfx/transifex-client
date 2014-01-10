@@ -23,7 +23,7 @@ from optparse import OptionParser, OptionGroup
 try:
     import configparser
 except ImportError:
-    import ConfigParser as configparser
+    import configparser as configparser
 
 
 from txclib import utils, project
@@ -50,9 +50,9 @@ def cmd_init(argv, path_to_tx):
 
     if os.path.isdir(os.path.join(path_to_tx,".tx")):
         logger.info("tx: There is already a tx folder!")
-        reinit = input("Do you want to delete it and reinit the project? [y/N]: ")
+        reinit = eval(input("Do you want to delete it and reinit the project? [y/N]: "))
         while (reinit != 'y' and reinit != 'Y' and reinit != 'N' and reinit != 'n' and reinit != ''):
-            reinit = input("Do you want to delete it and reinit the project? [y/N]: ")
+            reinit = eval(input("Do you want to delete it and reinit the project? [y/N]: "))
         if not reinit or reinit in ['N', 'n', 'NO', 'no', 'No']:
             return
         # Clean the old settings
@@ -70,7 +70,7 @@ def cmd_init(argv, path_to_tx):
     config = OrderedRawConfigParser()
 
     default_transifex = "https://www.transifex.com"
-    transifex_host = options.host or input("Transifex instance [%s]: " % default_transifex)
+    transifex_host = options.host or eval(input("Transifex instance [%s]: " % default_transifex))
 
     if not transifex_host:
         transifex_host = default_transifex
@@ -504,7 +504,7 @@ def cmd_help(argv, path_to_tx):
     logger.info("Available commands are:")
     for key in keys:
         logger.info("  %-15s\t%s" % (key, getattr(fns[key], '__doc__',
-                                                  fns[key].func_doc)))
+                                                  fns[key].__doc__)))
     logger.info("\nFor more information run %s command --help" % sys.argv[0])
 
 

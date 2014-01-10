@@ -172,9 +172,9 @@ def confirm(prompt='Continue?', default=True):
         prompt = prompt + '[y/N]'
         valid_no.append('')
 
-    ans = input(prompt)
+    ans = eval(input(prompt))
     while (ans not in valid_yes and ans not in valid_no):
-        ans = input(prompt)
+        ans = eval(input(prompt))
 
     return ans in valid_yes
 

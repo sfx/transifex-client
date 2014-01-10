@@ -11,7 +11,7 @@ import ssl
 try:
     import configparser
 except ImportError:
-    import ConfigParser as configparser
+    import configparser as configparser
 
 
 from txclib.web import *
@@ -157,9 +157,9 @@ class Project(object):
             passwd = self.txrc.get(host, 'password')
         except (configparser.NoOptionError, configparser.NoSectionError):
             logger.info("No entry found for host %s. Creating..." % host)
-            username = user or input("Please enter your transifex username: ")
+            username = user or eval(input("Please enter your transifex username: "))
             while (not username):
-                username = input("Please enter your transifex username: ")
+                username = eval(input("Please enter your transifex username: "))
             passwd = password
             while (not passwd):
                 passwd = getpass.getpass()
@@ -577,10 +577,10 @@ class Project(object):
             stats = self._get_stats_for_resource()
 
             if force and not no_interactive:
-                answer = input("Warning: By using --force, the uploaded"
+                answer = eval(input("Warning: By using --force, the uploaded"
                     " files will overwrite remote translations, even if they"
                     " are newer than your uploaded files.\nAre you sure you"
-                    " want to continue? [y/N] ")
+                    " want to continue? [y/N] "))
 
                 if not answer in ["", 'Y', 'y', "yes", 'YES']:
                     return

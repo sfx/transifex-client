@@ -1,7 +1,7 @@
 try:
     import configparser
 except ImportError:
-    import ConfigParser as configparser
+    import configparser as configparser
 
 from txclib.packages.urllib3.packages import six
 
