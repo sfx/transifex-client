@@ -50,9 +50,9 @@ def cmd_init(argv, path_to_tx):
 
     if os.path.isdir(os.path.join(path_to_tx,".tx")):
         logger.info("tx: There is already a tx folder!")
-        reinit = eval(input("Do you want to delete it and reinit the project? [y/N]: "))
+        reinit = str(input("Do you want to delete it and reinit the project? [y/N]: "))
         while (reinit != 'y' and reinit != 'Y' and reinit != 'N' and reinit != 'n' and reinit != ''):
-            reinit = eval(input("Do you want to delete it and reinit the project? [y/N]: "))
+            reinit = str(input("Do you want to delete it and reinit the project? [y/N]: "))
         if not reinit or reinit in ['N', 'n', 'NO', 'no', 'No']:
             return
         # Clean the old settings
@@ -70,7 +70,7 @@ def cmd_init(argv, path_to_tx):
     config = OrderedRawConfigParser()
 
     default_transifex = "https://www.transifex.com"
-    transifex_host = options.host or eval(input("Transifex instance [%s]: " % default_transifex))
+    transifex_host = options.host or str(input("Transifex instance [%s]: " % default_transifex))
 
     if not transifex_host:
         transifex_host = default_transifex
