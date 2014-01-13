@@ -806,7 +806,7 @@ class Project(object):
         # Create the Url
         kwargs['hostname'] = hostname
         kwargs.update(self.url_info)
-        url = (API_URLS[api_call] % kwargs).encode('UTF-8')
+        url = '{}'.format(API_URLS[api_call] % kwargs)
         logger.debug(url)
 
         if multipart:
@@ -1218,7 +1218,7 @@ class Project(object):
         kwargs['hostname'] = hostname
         kwargs.update(self.url_info)
         kwargs['project'] = pslug
-        url = (API_URLS[api_call] % kwargs).encode('UTF-8')
+        url = '{}'.format(API_URLS[api_call] % kwargs)
 
         headers = None
 

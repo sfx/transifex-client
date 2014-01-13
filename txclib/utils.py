@@ -1,9 +1,9 @@
 import os, sys, re, errno
 import ssl
 try:
-    from json import loads as parse_json, dumps as compile_json
+    from json import loads as _parse_json, dumps as compile_json
 except ImportError:
-    from simplejson import loads as parse_json, dumps as compile_json
+    from simplejson import loads as _parse_json, dumps as compile_json
 
 from txclib.packages import urllib3
 from txclib.packages.urllib3.packages import six
@@ -13,6 +13,19 @@ from txclib.exceptions import UnknownCommandError
 from txclib.paths import posix_path, native_path, posix_sep
 from txclib.web import user_agent_identifier
 from txclib.log import logger
+
+
+def parse_json(data):
+    """Convert byte-streams to Unicode then pass to parse_json.
+
+    The response body returned by txclib/project.py:do_url_request
+    sometimes needs to be interpreted as JSON, and sometimes as
+    bytes. For example, the .po's are returned as the whole response
+    body as bytes. parse_json chokes on bytes so we convert them to
+    Unicode when we assume the response body to be JSON.
+
+    """
+    return _parse_json(data.decode('UTF-8'))
 
 
 def find_dot_tx(path=os.path.curdir, previous=None):
@@ -74,7 +87,7 @@ def get_details(api_call, username, password, *args, **kwargs):
 
     This function can also be used to check the existence of a project.
     """
-    url = (API_URLS[api_call] % (kwargs)).encode('UTF-8')
+    url = '{}'.format(API_URLS[api_call] % (kwargs))
     conn = urllib3.connection_from_url(kwargs['hostname'])
     headers = urllib3.util.make_headers(
         basic_auth='{0}:{1}'.format(username, password),
